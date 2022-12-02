@@ -4,7 +4,7 @@ import java.io.File
 
 class DayOne {
     fun retrieveDataFromFile(): List<Int> {
-        return File("src/main/kotlin/dayone/day_one.txt")
+        return File("src/main/kotlin/dayone/input.txt")
             .useLines { it ->
                 it.toList().joinToString().split(", ,").map {elfList ->
                     var calories = 0
