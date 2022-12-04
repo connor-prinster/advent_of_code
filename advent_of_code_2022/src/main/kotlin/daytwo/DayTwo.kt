@@ -1,6 +1,5 @@
 package daytwo
 
-import dayone.DayOne
 import java.io.File
 
 class DayTwoPartOne {
