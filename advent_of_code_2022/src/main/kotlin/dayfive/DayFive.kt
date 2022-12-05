@@ -28,8 +28,6 @@ class DayFive {
                 }
             }
 
-        convertToVerticalCrates(arrangementTexts = arrangement)
-
         return FileInfo(
             instructions = instructions,
             verticalCrates = convertToVerticalCrates(arrangementTexts = arrangement)
@@ -82,7 +80,7 @@ class DayFive {
             horizontalCrates.forEach {
                 verticalCrate.add(it[i])
             }
-            verticalCrate.removeIf { it.isBlank() }
+            verticalCrate.removeIf { it == "?" }
             verticalCrates.add(verticalCrate)
         }
 
@@ -99,7 +97,10 @@ class DayFive {
         fileInfo.instructions.forEach { instruction ->
             val moved: ArrayList<String> = arrayListOf()
             for (i in 0 until instruction.howMany) {
-                try { moved.add(fileInfo.verticalCrates[instruction.from - 1].removeFirst()) } catch (e: Exception) {}
+                moved.add(
+                    fileInfo.verticalCrates[instruction.from - 1]
+                        .removeFirst()
+                )
             }
             moved.forEach { movedCrate ->
                 fileInfo.verticalCrates[instruction.to - 1].add(0, movedCrate)
