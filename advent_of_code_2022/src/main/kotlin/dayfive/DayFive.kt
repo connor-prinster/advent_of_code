@@ -1,7 +1,6 @@
 package dayfive
 
 import java.io.File
-import java.lang.Exception
 
 data class Instructions(val howMany: Int, val from: Int, val to: Int)
 data class FileInfo(val instructions: List<Instructions>, val verticalCrates: ArrayList<ArrayList<String>>)
@@ -87,13 +86,13 @@ class DayFive {
         return verticalCrates
     }
 
-    private fun returnTopCrates(fileInfo: FileInfo): String {
-        return moveCrates(fileInfo).map {
+    private fun returnTopCrates9000(fileInfo: FileInfo, is9001: Boolean = false): String {
+        return moveCrates(fileInfo, is9001).map {
             it[0]
         }.toString()
     }
 
-    private fun moveCrates(fileInfo: FileInfo): ArrayList<ArrayList<String>> {
+    private fun moveCrates(fileInfo: FileInfo, is9001: Boolean = false): ArrayList<ArrayList<String>> {
         fileInfo.instructions.forEach { instruction ->
             val moved: ArrayList<String> = arrayListOf()
             for (i in 0 until instruction.howMany) {
@@ -102,16 +101,22 @@ class DayFive {
                         .removeFirst()
                 )
             }
+
+            if (is9001) {
+                moved.reverse()
+            }
+
             moved.forEach { movedCrate ->
                 fileInfo.verticalCrates[instruction.to - 1].add(0, movedCrate)
             }
         }
 
+//        GNFBSBJLH
         return fileInfo.verticalCrates
     }
 
-    fun findTopCrate(filename: String): String {
-        return returnTopCrates(parseFile(filename))
+    fun findTopCrate(filename: String, is9001: Boolean = false): String {
+        return returnTopCrates9000(parseFile(filename), is9001 = is9001)
             .replace("[", "")
             .replace("]", "")
             .replace(", ", "")
@@ -119,5 +124,8 @@ class DayFive {
 }
 
 fun main(args: Array<String>) {
-    println("Top of each stack: ${DayFive().findTopCrate("advent_of_code_2022/src/main/kotlin/dayfive/input.txt")}")
+    // Top of each stack Crane9000: JRVNHHCSJ
+    println("Top of each stack Crane9000: ${DayFive().findTopCrate("advent_of_code_2022/src/main/kotlin/dayfive/input.txt")}")
+    // Top of each stack Crane9001: GNFBSBJLH
+    println("Top of each stack Crane9001: ${DayFive().findTopCrate("advent_of_code_2022/src/main/kotlin/dayfive/input.txt", is9001 = true)}")
 }
