@@ -1,4 +1,4 @@
-package dayseven
+package day7
 
 import java.io.File
 import java.util.Stack
@@ -120,6 +120,6 @@ class DaySeven {
 
 
 fun main(args: Array<String>) {
-    val filename = "advent_of_code_2022/src/main/kotlin/dayseven/test_input.txt"
+    val filename = "advent_of_code_2022/src/main/kotlin/day7/test_input.txt"
     println("How many characters must be parsed for marker: ${DaySeven().sumOfTotalSizeOfDirectories(filename)}")
 }

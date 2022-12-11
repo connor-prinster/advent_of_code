@@ -1,6 +1,5 @@
-package dayfour
+package day4
 
-import daythree.RuckSack
 import java.io.File
 
 data class AssignmentPairs(val pairOne: FirstLast, val pairTwo: FirstLast)
@@ -87,6 +86,6 @@ class DayFourPartOne {
 }
 
 fun main(args: Array<String>) {
-    println("Assignment pairs containing the other: ${DayFourPartOne().countPairsContainingTheOther("advent_of_code_2022/src/main/kotlin/dayfour/input.txt")}")
-    println("Assignment pairs overlapping at all: ${DayFourPartOne().countPairsOverlappingTheOther("advent_of_code_2022/src/main/kotlin/dayfour/input.txt")}")
+    println("Assignment pairs containing the other: ${DayFourPartOne().countPairsContainingTheOther("advent_of_code_2022/src/main/kotlin/day4/input.txt")}")
+    println("Assignment pairs overlapping at all: ${DayFourPartOne().countPairsOverlappingTheOther("advent_of_code_2022/src/main/kotlin/day4/input.txt")}")
 }

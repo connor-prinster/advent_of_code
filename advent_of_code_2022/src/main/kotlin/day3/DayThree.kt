@@ -1,4 +1,4 @@
-package daythree
+package day3
 
 import java.io.File
 
@@ -21,7 +21,7 @@ data class ElfSquad(val elves: List<RuckSack>)
 class DayThreePartOne {
     fun findDuplicateItemPriorities(): Int {
         var priority: Int = 0
-        val ruckSacks: List<RuckSack> = getRucksacks("src/main/kotlin/daythree/input.txt")
+        val ruckSacks: List<RuckSack> = getRucksacks("src/main/kotlin/day3/input.txt")
 
         ruckSacks.forEachIndexed { whichRucksack, ruckSack ->
             val doubleLetters = findDuplicateItems(
@@ -38,7 +38,7 @@ class DayThreePartOne {
 class DayThreePartTwo {
     fun retrieveBadgePriorities(): Int {
         var priority = 0
-        val ruckSacks: List<RuckSack> = getRucksacks("src/main/kotlin/daythree/input.txt")
+        val ruckSacks: List<RuckSack> = getRucksacks("src/main/kotlin/day3/input.txt")
         val squads = makeSquads(ruckSacks)
         squads.forEach {
             priority += convertToPriority(

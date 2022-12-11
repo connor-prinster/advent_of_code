@@ -1,9 +1,9 @@
-package dayone
+package day1
 
 import java.io.File
 
 class DayOnePartOne {
-    fun retrieveDataFromFile(filename: String = "src/main/kotlin/dayone/input.txt"): List<Int> {
+    fun retrieveDataFromFile(filename: String = "src/main/kotlin/day1/input.txt"): List<Int> {
         return File(filename)
             .useLines { it ->
                 it.toList().joinToString().split(", ,").map {elfList ->
