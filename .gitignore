@@ -1,5 +1,6 @@
 .DS_Store
 advent_of_code_2022/.idea/
+.idea
 /confluence/target
 /dependencies/repo
 /android.tests.dependencies
