@@ -1,4 +1,4 @@
-package dayeight
+package day8
 
 import java.io.File
 
@@ -88,6 +88,6 @@ class DayEight {
 }
 
 fun main(args: Array<String>) {
-    val filename = "advent_of_code_2022/src/main/kotlin/dayeight/test_input.txt"
+    val filename = "advent_of_code_2022/src/main/kotlin/day8/test_input.txt"
     println("How many trees are visible: ${DayEight().countTheTrees(filename)}")
 }

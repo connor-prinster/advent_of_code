@@ -1,4 +1,4 @@
-package daytwo
+package day2
 
 import java.io.File
 
@@ -23,7 +23,7 @@ class DayTwoPartOne {
     fun calculateStrategy(): Int {
         var points: Int = 0
 
-        File("src/main/kotlin/daytwo/input.txt")
+        File("src/main/kotlin/day2/input.txt")
             .useLines {
                     it.toMutableList()
             }
@@ -85,7 +85,7 @@ class DayTwoPartTwo {
     fun calculateStrategy(): Int {
         var points: Int = 0
 
-        File("src/main/kotlin/daytwo/input.txt")
+        File("src/main/kotlin/day2/input.txt")
             .useLines {
                     it.toMutableList()
             }

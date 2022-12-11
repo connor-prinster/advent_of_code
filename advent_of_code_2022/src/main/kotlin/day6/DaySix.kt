@@ -1,4 +1,4 @@
-package daysix
+package day6
 
 import java.io.File
 import java.util.Collections
@@ -54,7 +54,7 @@ class DaySix {
 }
 
 fun main(args: Array<String>) {
-    val filename = "advent_of_code_2022/src/main/kotlin/daysix/input.txt"
+    val filename = "advent_of_code_2022/src/main/kotlin/day6/input.txt"
 //    [7, 5, 6, 10, 11]
     println("How many characters must be parsed for marker: ${DaySix().howManyCharactersBeforeMarker(filename, 4)}")
 //    [19, 23, 23, 29, 26]

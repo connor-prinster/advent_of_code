@@ -1,4 +1,4 @@
-package dayten
+package day10
 
 import java.io.File
 
@@ -130,7 +130,7 @@ class DayTen {
 }
 
 fun main(args: Array<String>) {
-    val filename = "advent_of_code_2022/src/main/kotlin/dayten/input.txt"
+    val filename = "advent_of_code_2022/src/main/kotlin/day10/input.txt"
     println("Sum of the 20th, 60th, 100th, ..., 220th strengths: ${DayTen().main(filename)}")
     println("CrtScreen:\n ${DayTen().main(filename, isPartTwo = true)}")
 }

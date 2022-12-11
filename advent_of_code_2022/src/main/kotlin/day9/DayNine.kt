@@ -1,4 +1,4 @@
-package daynine
+package day9
 
 import java.io.File
 
@@ -22,6 +22,6 @@ class DayNine {
 }
 
 fun main(args: Array<String>) {
-    val filename = "advent_of_code_2022/src/main/kotlin/daynine/test_input.txt"
+    val filename = "advent_of_code_2022/src/main/kotlin/day9/test_input.txt"
     println("${DayNine().main(filename)}")
 }

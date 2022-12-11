@@ -1,4 +1,4 @@
-package dayfive
+package day5
 
 import java.io.File
 
@@ -125,7 +125,7 @@ class DayFive {
 
 fun main(args: Array<String>) {
     // Top of each stack Crane9000: JRVNHHCSJ
-    println("Top of each stack Crane9000: ${DayFive().findTopCrate("advent_of_code_2022/src/main/kotlin/dayfive/input.txt")}")
+    println("Top of each stack Crane9000: ${DayFive().findTopCrate("advent_of_code_2022/src/main/kotlin/day5/input.txt")}")
     // Top of each stack Crane9001: GNFBSBJLH
-    println("Top of each stack Crane9001: ${DayFive().findTopCrate("advent_of_code_2022/src/main/kotlin/dayfive/input.txt", is9001 = true)}")
+    println("Top of each stack Crane9001: ${DayFive().findTopCrate("advent_of_code_2022/src/main/kotlin/day5/input.txt", is9001 = true)}")
 }
