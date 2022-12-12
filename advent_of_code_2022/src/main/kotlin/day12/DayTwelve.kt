@@ -54,7 +54,27 @@ class DayTwelve {
         return heightMap
     }
 
-    private fun traverseMap(maps: ArrayList<HeightMap>): HeightMap {
+    private fun findAllStartingPoints(heightMap: HeightMap): List<HeightMap> {
+        val maps: ArrayList<HeightMap> = arrayListOf()
+        val initStartPoint = heightMap.position
+        val lowestPoint = 'a'.code
+
+        heightMap.map.forEachIndexed { rowIndex, row ->
+            row.forEachIndexed { columnIndex, point ->
+                if (point.height == lowestPoint && !(initStartPoint.row == rowIndex && initStartPoint.column == columnIndex)) {
+                    maps.add(
+                        heightMap.copy(
+                            position = HeightPair(row = rowIndex, column = columnIndex)
+                        )
+                    )
+                }
+            }
+        }
+
+        return maps
+    }
+
+    private fun traverseMaps(maps: ArrayList<HeightMap>): HeightMap {
         val finishedMaps: ArrayList<HeightMap> = arrayListOf()
         while (maps.isNotEmpty()) {
             val mapToAnalyze = maps.removeFirst()
@@ -155,12 +175,20 @@ class DayTwelve {
         return map
     }
 
-    fun findMinimumStepsToBestSignal(filename: String, isPartTwo: Boolean): Int {
-        return traverseMap(arrayListOf(parseFile(filename))).steps
+    fun findMinimumStepsToBestSignal(filename: String, isPartTwo: Boolean = false): Int {
+        val maps = arrayListOf(parseFile(filename))
+        if (isPartTwo) {
+            findAllStartingPoints(maps[0]).forEach {
+                maps.add(it)
+            }
+        }
+
+        return traverseMaps(maps).steps
     }
 }
 
 fun main(args: Array<String>) {
     val filename = "advent_of_code_2022/src/main/kotlin/day12/input.txt"
-    println("Minimum number of steps: ${DayTwelve().findMinimumStepsToBestSignal(filename, isPartTwo = false)}")
+    println("Minimum number of steps: ${DayTwelve().findMinimumStepsToBestSignal(filename)}")
+    println("Minimum number of steps on a new trail: ${DayTwelve().findMinimumStepsToBestSignal(filename, isPartTwo = true)}")
 }
