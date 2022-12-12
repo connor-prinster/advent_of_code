@@ -2,6 +2,7 @@ package day11
 
 import java.io.File
 import java.lang.Exception
+import java.math.BigInteger
 
 enum class OperationType {
     ADDITION,
@@ -9,17 +10,17 @@ enum class OperationType {
     NULL
 }
 data class Test(
-    val test: (Int) -> Boolean = { _ -> false},
+    val test: (BigInteger) -> Boolean = { _ -> false},
     var isTrueMonkeyId: Int = -1,
     var isFalseMonkeyId: Int = -1,
 )
 data class Operation(
-    val second: Int? = -1,
+    val second: BigInteger? = BigInteger.valueOf(-1),
     val type: OperationType = OperationType.NULL
 )
 data class Item(
     val id: Int,
-    var worryLevel: Int = id
+    var worryLevel: BigInteger = BigInteger.valueOf(id.toLong())
 )
 data class Monkey(
     val id: Int,
@@ -56,14 +57,19 @@ class DayEleven {
                             .split("Operation: new = ")[1]
                             .split(" ")
 
+                        val potentialSecond = operationVals[2].toIntOrNull()
                         monkeyMap[monkeyId]?.operation = Operation(
                             type = if (operationVals[1] == "*") OperationType.MULTIPLICATION else OperationType.ADDITION,
-                            second = operationVals[2].toIntOrNull(),
+                            second = if (potentialSecond == null) null else BigInteger.valueOf(potentialSecond.toLong()),
                         )
                     }
                     if (text.contains("Test:")) {
                         monkeyMap[monkeyId]?.test = Test(
-                            test = {itemVal: Int -> itemVal % text.split("Test: divisible by ")[1].toInt() == 0 }
+                            test = {itemVal: BigInteger ->
+                                val divisibleBy = text.split("Test: divisible by ")[1].toLong()
+
+                                itemVal.rem(BigInteger.valueOf(divisibleBy)) == BigInteger.valueOf(0)
+                            }
                         )
                     }
                     if (text.contains("If true:")) {
@@ -79,28 +85,30 @@ class DayEleven {
         return monkeyMap
     }
 
-    private fun performBusiness(map: HashMap<Int, Monkey>): Int {
+    private fun performBusiness(map: HashMap<Int, Monkey>, isPartTwo: Boolean): BigInteger {
         var tempMap = map
-        var round: Int = 0
-        while (round < 20) {
-            tempMap = performRound(tempMap)
+        var round = 0
+        val howManyRounds = if (isPartTwo) 10000 else 20
+        while (round < howManyRounds) {
+            tempMap = performRound(tempMap, isPartTwo)
             round += 1
+//            if (round == 1 || round == 20 || round % 1000 == 0) printMonkeyBusiness(tempMap, round)
         }
         val list = tempMap.toList().sortedBy { pair ->
             pair.second.inspectedCount
         }.map { it.second }.reversed()
 
-        return (list[0].inspectedCount * list[1].inspectedCount)
+        return BigInteger.valueOf(list[0].inspectedCount.toLong()).times(BigInteger.valueOf(list[1].inspectedCount.toLong()))
     }
 
-    private fun performRound(map: HashMap<Int, Monkey>): HashMap<Int, Monkey> {
+    private fun performRound(map: HashMap<Int, Monkey>, isPartTwo: Boolean): HashMap<Int, Monkey> {
         val monkeysPerRound = map.keys.size
         for (i in 0 until monkeysPerRound) {
             val monkey = map[i]
             if (monkey != null) {
                 val itemsToRemove = arrayListOf<Item>()
                 for (item in monkey.items) {
-                    item.worryLevel = calculateWorryLevel(monkey, item)
+                    item.worryLevel = calculateWorryLevel(monkey, item, isPartTwo)
                     map[monkey.id]?.inspectedCount = map[monkey.id]?.inspectedCount?.plus(1)!!
                     map[throwToWhich(item, monkey.test)]?.items?.add(item)
                     itemsToRemove.add(item)
@@ -119,28 +127,39 @@ class DayEleven {
         return if (whichMonkey) test.isTrueMonkeyId else test.isFalseMonkeyId
     }
 
-    private fun calculateWorryLevel(monkey: Monkey, item: Item): Int {
-        val init = item.worryLevel
-        val second: Int = monkey.operation.second ?: init
+    private fun calculateWorryLevel(monkey: Monkey, item: Item, isPartTwo: Boolean): BigInteger {
+        val init = BigInteger.valueOf(item.worryLevel.toLong())
+        val second: BigInteger = monkey.operation.second ?: init
         return ( when(monkey.operation.type) {
             OperationType.ADDITION -> {
-                init + second
+                init.add(second)
             }
             OperationType.MULTIPLICATION -> {
-                init * second
+                init.times(second)
             }
             else -> {
                 throw Exception("Something bad happened")
             }
-        }) / 3
+        }).div(BigInteger.valueOf(if (isPartTwo) 1L else 3L))
     }
 
-    fun levelOfMonkeyBusiness(filename: String, isPartTwo: Boolean = false): Int {
-        return performBusiness(parseFile(filename = filename))
+    private fun printMonkeyBusiness(map: HashMap<Int, Monkey>, round: Int) {
+        println("=== After round $round ===")
+        map.keys.toList().forEach {
+            println(
+                "Monkey $it inspected items ${map[it]!!.inspectedCount} times"
+            )
+        }
+        println()
+    }
+
+    fun levelOfMonkeyBusiness(filename: String, isPartTwo: Boolean = false): BigInteger {
+        return performBusiness(parseFile(filename = filename), isPartTwo)
     }
 }
 
 fun main(args: Array<String>) {
-    val filename = "advent_of_code_2022/src/main/kotlin/day11/input.txt"
-    println("Level of monkey business: ${ DayEleven().levelOfMonkeyBusiness(filename) }")
+    val filename = "advent_of_code_2022/src/main/kotlin/day11/test_input.txt"
+    println("Level of monkey business 20 rounds: ${ DayEleven().levelOfMonkeyBusiness(filename) }\n")
+    println("Level of monkey business 10000 rounds: ${ DayEleven().levelOfMonkeyBusiness(filename, isPartTwo = true) }")
 }
